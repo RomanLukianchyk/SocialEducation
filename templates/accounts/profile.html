@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile_user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ profile_user.username }}</h1>
+            {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ profile_user.username }}'s avatar" class="img-fluid">
+            {% else %}
+                <img src="https://res.cloudinary.com/dkyeh8rik/image/upload/t_Resice/v1721581129/avatar_rwagqe.jpg" alt="Default avatar" class="img-fluid">
+            {% endif %}
+            <p><strong>Name:</strong> {{ profile.full_name }}</p>
+            <p><strong>Bio:</strong> {{ profile.bio }}</p>
+            <p><strong>Followers:</strong> {{ followers_count }}</p>
+            <p><strong>Following:</strong> {{ following_count }}</p>
+
+            {% if profile_user != request.user %}
+                {% if is_following %}
+                    <a href="{% url 'unfollow_user' username=profile_user.username %}" class="btn btn-warning">Unfollow</a>
+                {% else %}
+                    <a href="{% url 'follow_user' username=profile_user.username %}" class="btn btn-primary">Follow</a>
+                {% endif %}
+            {% endif %}
+            {% if profile_user == request.user %}
+                <a href="{% url 'edit_profile' %}" class="btn btn-success">Edit Profile</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

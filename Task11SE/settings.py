@@ -5,15 +5,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-_h%e$jhyg0=t&gp39@)d_z#g2cc2g5sxkjs+y*%tu4hk@kh1$v'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['romanlukianchyk1.eu.pythonanywhere.com']
 
 LOGIN_REDIRECT_URL = '/blog/feed/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-CONFIRMATION_URL = 'localhost/registration/confirm'
-SITE_URL = 'localhost'
+CONFIRMATION_URL = 'romanlukianchyk1.eu.pythonanywhere.com/registration/confirm'
+SITE_URL = 'romanlukianchyk1.eu.pythonanywhere.com'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,12 +63,12 @@ WSGI_APPLICATION = 'Task11SE.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'socialeducation',
-        'USER': 'admin',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'RomanLukianchyk1$default',
+        'USER': 'RomanLukianchyk1',
         'PASSWORD': 'arrowqwe26',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': 'RomanLukianchyk1.mysql.eu.pythonanywhere-services.com',
+        'PORT': '3306',
     }
 }
 

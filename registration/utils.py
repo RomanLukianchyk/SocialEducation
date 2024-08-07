@@ -1,4 +1,4 @@
-import os
+
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils.encoding import force_bytes

@@ -1,19 +1,22 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-_h%e$jhyg0=t&gp39@)d_z#g2cc2g5sxkjs+y*%tu4hk@kh1$v'
-DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG') == 'True'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',')
 
 LOGIN_REDIRECT_URL = '/blog/feed/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-CONFIRMATION_URL = 'localhost/registration/confirm'
-SITE_URL = 'localhost'
+CONFIRMATION_URL = os.getenv('CONFIRMATION_URL')
+SITE_URL = os.getenv('SITE_URL')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -24,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'accounts',
-    'Task11SE',
+    'task11SE',
     'registration',
     'cloudinary',
     'cloudinary_storage',
@@ -41,7 +44,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'Task11SE.urls'
+ROOT_URLCONF = 'task11SE.urls'
 
 TEMPLATES = [
     {
@@ -59,23 +62,23 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Task11SE.wsgi.application'
+WSGI_APPLICATION = 'task11SE.wsgi.application'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'socialeducation',
-        'USER': 'admin',
-        'PASSWORD': 'arrowqwe26',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dkyeh8rik',
-    'API_KEY': '164698517151334',
-    'API_SECRET': 'j_XYqJ0MrNLmwoxnzlMu1EIlV20',
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -107,8 +110,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '19arrow19@gmail.com'
-EMAIL_HOST_PASSWORD = 'rzbm jxtz rwof cvgb'
-DEFAULT_FROM_EMAIL = '19arrow19@gmail.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

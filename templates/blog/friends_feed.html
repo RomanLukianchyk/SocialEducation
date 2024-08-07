@@ -1,35 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Лента друзей</h1>
-<a href="{% url 'create_post' %}" class="btn btn-primary">Создать пост</a>
+<div align="center">
+    <h1>Лента друзей</h1>
+    <a href="{% url 'create_post' %}" class="btn btn-primary">Create posts</a>
 
-<hr>
+    <hr>
 
-{% for post in posts %}
-<div>
-    <p><a href="{% url 'profile' username=post.author.username %}">{{ post.author.username }}</a>: {{ post.content }}</p>
-    {% if post.image %}
-        <img src="{{ post.image.url }}" alt="Изображение к посту" style="width: 100%; max-width: 600px;">
-    {% else %}
-        <img src="https://res.cloudinary.com/dkyeh8rik/image/upload/t_Resice/v1721581129/avatar_rwagqe.jpg" alt="Default avatar" class="img-fluid">
-    {% endif %}
-    <p>Опубликовано: {{ post.created_at|date:"d M Y H:i" }}</p>
-    <p>Теги: 
-        {% for tag in post.posttag_set.all %}
-            <span class="badge badge-secondary">{{ tag.tag.name }}</span>
-        {% endfor %}
-    </p>
-    <p>Likes: {{ post.likes_count }} | Dislikes: {{ post.dislikes_count }}</p>
-    <a href="{% url 'like_post' post.id %}">Like</a>
-    <a href="{% url 'dislike_post' post.id %}">Dislike</a>
-    {% if request.user.is_authenticated and post.author != request.user %}
-        {% if post.author.id in following %}
-            <a href="{% url 'unfollow_user' username=post.author.username %}" class="btn btn-warning">Отписаться</a>
+    {% for post in posts %}
+    <div>
+        <p><a href="{% url 'profile' username=post.author.username %}">{{ post.author.username }}</a>: {{ post.content }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Изображение к посту" style="width: 100%; max-width: 600px;">
         {% else %}
-            <a href="{% url 'follow_user' username=post.author.username %}" class="btn btn-primary">Подписаться</a>
+            <img src="https://res.cloudinary.com/dkyeh8rik/image/upload/t_Resice/v1721581129/avatar_rwagqe.jpg" alt="Default avatar" class="img-fluid">
         {% endif %}
-    {% endif %}
+        <p>Опубликовано: {{ post.created_at|date:"d M Y H:i" }}</p>
+        <p>Теги: 
+            {% for tag in post.posttag_set.all %}
+                <span class="badge badge-secondary">{{ tag.tag.name }}</span>
+            {% endfor %}
+        </p>
+        <p>Likes: {{ post.likes_count }} | Dislikes: {{ post.dislikes_count }}</p>
+        {% if user.is_authenticated %}
+            {% if not post.user_liked %}
+                <a href="{% url 'like_post' post.id %}">Like</a>
+            {% else %}
+                <a href="{% url 'like_post' post.id %}">Unlike</a>
+            {% endif %}
+            {% if not post.user_disliked %}
+                <a href="{% url 'dislike_post' post.id %}">Dislike</a>
+            {% else %}
+                <a href="{% url 'dislike_post' post.id %}">Undislike</a>
+            {% endif %}
+        {% endif %}
+        {% if request.user.is_authenticated and post.author != request.user %}
+            {% if post.author.id in following %}
+                <a href="{% url 'unfollow_user' username=post.author.username %}" class="btn btn-warning">Unfollow</a>
+            {% else %}
+                <a href="{% url 'follow_user' username=post.author.username %}" class="btn btn-primary">Follow</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ posts.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">next</a>
+                <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </div>
-{% endfor %}
 {% endblock %}

@@ -3,22 +3,12 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from accounts.models import Profile
-import io
-from PIL import Image
+from accounts.utils import create_test_image
 
 
 class AccountsTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='tester', email='rlukianchyk@gmail.com', password='password123')
-
-    @staticmethod
-    def create_test_image():
-        file = io.BytesIO()
-        image = Image.new('RGB', (100, 100), color='red')
-        image.save(file, 'JPEG')
-        file.name = 'test_image.jpg'
-        file.seek(0)
-        return file
 
     def test_profile_creation(self):
         profile, created = Profile.objects.get_or_create(user=self.user,
@@ -35,7 +25,7 @@ class AccountsTests(TestCase):
         self.assertEqual(str(profile), 'tester')
 
     def test_profile_avatar_upload(self):
-        avatar = SimpleUploadedFile(name='avatar.jpg', content=self.create_test_image().read(),
+        avatar = SimpleUploadedFile(name='avatar.jpg', content=create_test_image().read(),
                                     content_type='image/jpeg')
         profile, created = Profile.objects.get_or_create(user=self.user)
         profile.avatar = avatar

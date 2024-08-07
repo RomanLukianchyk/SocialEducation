@@ -2,8 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from blog.models import Post, Tag, PostTag, Like
 from django.core.files.uploadedfile import SimpleUploadedFile
-import io
-from PIL import Image
+from accounts.utils import create_test_image
 
 
 class PostModelTest(TestCase):
@@ -20,17 +19,7 @@ class ImageModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='tester', password='password123')
         self.post = Post.objects.create(author=self.user, content='Test content')
-        self.image = SimpleUploadedFile(name='test_image.jpg', content=self.create_test_image().read(), content_type='image/jpeg')
-
-    @staticmethod
-    def create_test_image():
-        file = io.BytesIO()
-        image = Image.new('RGB', (100, 100), color='red')
-        image.save(file, 'JPEG')
-        file.name = 'test_image.jpg'
-        file.seek(0)
-        return file
-
+        self.image = SimpleUploadedFile(name='test_image.jpg', content=create_test_image().read(), content_type='image/jpeg')
 
 class TagModelTest(TestCase):
     def setUp(self):

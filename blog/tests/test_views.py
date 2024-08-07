@@ -3,8 +3,7 @@ from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 from blog.models import Post, Tag, Like
-import io
-from PIL import Image
+from accounts.utils import create_test_image
 
 
 class PostViewTest(TestCase):
@@ -13,17 +12,8 @@ class PostViewTest(TestCase):
         self.user = User.objects.create_user(username='tester', password='password123')
         self.client.login(username='tester', password='password123')
 
-    @staticmethod
-    def create_test_image():
-        file = io.BytesIO()
-        image = Image.new('RGB', (100, 100), color='red')
-        image.save(file, 'JPEG')
-        file.name = 'test_image.jpg'
-        file.seek(0)
-        return file
-
     def test_create_post_with_tags(self):
-        test_image = self.create_test_image()
+        test_image = create_test_image()
         test_image.seek(0)
         response = self.client.post(reverse('create_post'), {
             'content': 'Test post content',
@@ -36,7 +26,7 @@ class PostViewTest(TestCase):
         self.assertTrue(Tag.objects.filter(name='testtag2').exists())
 
     def test_create_post_without_tags(self):
-        test_image = self.create_test_image()
+        test_image = create_test_image()
         test_image.seek(0)
         response = self.client.post(reverse('create_post'), {
             'content': 'Test post content without tags',

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 <div align="center">
     <h1>Лента друзей</h1>
@@ -11,7 +12,7 @@
     <div>
         <p><a href="{% url 'profile' username=post.author.username %}">{{ post.author.username }}</a>: {{ post.content }}</p>
         {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Изображение к посту" style="width: 100%; max-width: 600px;">
+            <img src="{{ post.image.url  }}" alt="Post Image" style="width: 100%; max-width: 600px;">
         {% else %}
             <img src="https://res.cloudinary.com/dkyeh8rik/image/upload/t_Resice/v1721581129/avatar_rwagqe.jpg" alt="Default avatar" class="img-fluid">
         {% endif %}

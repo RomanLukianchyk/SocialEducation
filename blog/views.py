@@ -65,6 +65,7 @@ def friends_feed(request):
 
     return render(request, 'blog/friends_feed.html', {'posts': posts})
 
+
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)

@@ -24,6 +24,11 @@
         h2 {
             text-align: center;
         }
+        .notification {
+            color: #d9534f;
+            text-align: center;
+            margin-bottom: 15px;
+        }
         button {
             background-color: #007BFF;
             color: white;
@@ -41,6 +46,7 @@
 </head>
 <body>
     <h2>Login</h2>
+    <p class="notification">Please check your email and confirm your email address to log in.</p>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

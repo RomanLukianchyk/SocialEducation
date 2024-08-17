@@ -11,7 +11,7 @@ def send_confirmation_email(request, user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-    confirm_url = f"{'localhost/registration/confirm'}/{uid}/{token}/"
+    confirm_url = f"{'127.0.0.1:8000/registration/confirm'}/{uid}/{token}/"
 
     subject = 'Confirm your registration'
     message = f'Please click the following link to confirm your registration: {confirm_url}'

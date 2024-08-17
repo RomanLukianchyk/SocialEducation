@@ -11,7 +11,8 @@ staticfiles/
 db.sqlite3
 media/
 .env
-
+task11SE/settings.py
+node_modules
 /blog/tests/test_image.jpg
 /blog/tests/__init__.py
 /registration/tests/__init__.py

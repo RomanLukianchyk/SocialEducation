@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Друзья</h1>
-<ul>
-    {% for follow in friends %}
-    <li>
-        <a href="{% url 'profile' username=follow.followed.username %}">
-            {{ follow.followed.username }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h1 class="mb-4">Friends</h1>
+    <ul class="list-group">
+        {% for follow in friends %}
+        <li class="list-group-item">
+            <a href="{% url 'profile' username=follow.followed.username %}">
+                {{ follow.followed.username }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

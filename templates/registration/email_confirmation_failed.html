@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Confirmation Failed</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Email Confirmation Failed</h1>
-    <p>Sorry, the confirmation link is invalid or has expired. Please try registering again.</p>
-    <a href="{% url 'signup' %}">Back to Signup</a>
+<body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="text-center">
+        <h1 class="text-danger mb-4">Email Confirmation Failed</h1>
+        <p>Sorry, the confirmation link is invalid or has expired. Please try registering again.</p>
+        <a href="{% url 'signup' %}" class="btn btn-primary mt-3">Back to Signup</a>
+    </div>
 </body>
 </html>

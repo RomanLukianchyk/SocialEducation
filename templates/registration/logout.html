@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logout</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h2>Logout</h2>
-    <p>You have been logged out.</p>
+<body class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="text-center">
+        <h2 class="mb-4">Logout</h2>
+        <p>You have been logged out.</p>
+        <a href="{% url 'login' %}" class="btn btn-primary mt-3">Log in again</a>
+    </div>
 </body>
 </html>

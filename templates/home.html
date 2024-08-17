@@ -3,17 +3,18 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
-<h2>Добро пожаловать на мой сайт!</h2>
-<p>Это главная страница моего сайта.</p>
-<ul style="list-style: none; padding: 0;">
+<div class="jumbotron text-center mt-5">
+    <h1 class="display-4">Добро пожаловать на мой сайт!</h1>
+    <p class="lead">Это главная страница моего сайта, где вы можете зарегистрироваться, войти в систему и взаимодействовать с другими пользователями.</p>
+    <hr class="my-4">
     {% if not request.user.is_authenticated %}
-
-    <li><a href="{% url 'signup' %}">Регистрация</a></li>
-    <li><a href="{% url 'login' %}">Вход</a></li>
+        <p>Для начала работы, пожалуйста, зарегистрируйтесь или войдите в систему.</p>
+        <a class="btn btn-primary btn-lg mr-2" href="{% url 'signup' %}" role="button">Регистрация</a>
+        <a class="btn btn-secondary btn-lg" href="{% url 'login' %}" role="button">Вход</a>
     {% else %}
-    <!-- Ссылки для авторизованных пользователей -->
-    <li><a href="{% url 'profile' request.user.username %}">Аккаунт</a></li>
-    <li><a href="{% url 'feed' %}">Блог</a></li>
+        <p>Добро пожаловать обратно! Что вы хотите сделать сегодня?</p>
+        <a class="btn btn-success btn-lg mr-2" href="{% url 'profile' request.user.username %}" role="button">Мой профиль</a>
+        <a class="btn btn-info btn-lg" href="{% url 'feed' %}" role="button">Перейти в блог</a>
     {% endif %}
-</ul>
+</div>
 {% endblock %}

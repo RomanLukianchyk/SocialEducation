@@ -6,7 +6,7 @@ venv/
 .idea/
 # Python cache files
 **/__pycache__/
-
+node_modules
 staticfiles/
 db.sqlite3
 media/

@@ -28,24 +28,25 @@
                 {% endfor %}
             </p>
             <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <a href="{% url 'like_post' post.id %}" class="btn btn-outline-success btn-sm">
-                        {% if not post.user_liked %} Like {% else %} Unlike {% endif %}
-                    </a>
-                    <a href="{% url 'dislike_post' post.id %}" class="btn btn-outline-danger btn-sm">
-                        {% if not post.user_disliked %} Dislike {% else %} Undislike {% endif %}
-                    </a>
-                </div>
-                {% if request.user.is_authenticated and post.author != request.user %}
-                    <div>
-                        {% if post.author.id in following %}
-                            <a href="{% url 'unfollow_user' username=post.author.username %}" class="btn btn-warning btn-sm">Unfollow</a>
-                        {% else %}
-                            <a href="{% url 'follow_user' username=post.author.username %}" class="btn btn-primary btn-sm">Follow</a>
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </div>
+    <div>
+        <a href="{% url 'like_post' post.id %}" class="btn btn-outline-success btn-sm btn-like">
+            {% if not post.user_liked %} Like {% else %} Unlike {% endif %}
+        </a>
+        <a href="{% url 'dislike_post' post.id %}" class="btn btn-outline-danger btn-sm btn-dislike">
+            {% if not post.user_disliked %} Dislike {% else %} Undislike {% endif %}
+        </a>
+    </div>
+    {% if request.user.is_authenticated and post.author != request.user %}
+        <div>
+            {% if post.author.id in following %}
+                <a href="{% url 'unfollow_user' username=post.author.username %}" class="btn btn-warning btn-sm btn-follow">Unfollow</a>
+            {% else %}
+                <a href="{% url 'follow_user' username=post.author.username %}" class="btn btn-primary btn-sm btn-follow">Follow</a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
         </div>
     </div>
     {% endfor %}

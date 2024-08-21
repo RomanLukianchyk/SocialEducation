@@ -1,30 +1,41 @@
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-like, .btn-dislike, .btn-follow').forEach(function(button) {
+    document.querySelectorAll('.btn-like').forEach(function(button) {
         button.addEventListener('click', function(event) {
             event.preventDefault();
-            const url = this.getAttribute('href');
+            handleAction(this, 'liked', 'unliked');
+        });
+    });
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Обновляем текст кнопки в зависимости от действия
-                    if (data.action === 'liked' || data.action === 'unliked') {
-                        this.textContent = data.action === 'liked' ? 'Unlike' : 'Like';
-                    } else if (data.action === 'disliked' || data.action === 'undisliked') {
-                        this.textContent = data.action === 'disliked' ? 'Undislike' : 'Dislike';
-                    } else if (data.action === 'followed' || data.action === 'unfollowed') {
-                        this.textContent = data.action === 'followed' ? 'Unfollow' : 'Follow';
-                    }
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    document.querySelectorAll('.btn-dislike').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            handleAction(this, 'disliked', 'undisliked');
+        });
+    });
+
+    document.querySelectorAll('.btn-follow').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            handleAction(this, 'followed', 'unfollowed');
         });
     });
 });
+
+function handleAction(button, actionTrue, actionFalse) {
+    const url = button.getAttribute('href');
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            button.textContent = data.action === actionTrue ? actionFalse : actionTrue;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}

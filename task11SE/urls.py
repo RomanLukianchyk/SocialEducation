@@ -7,6 +7,7 @@ from task11SE.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('social_django.urls', namespace='social')),
     path('', home, name='home'),
     path('accounts/', include('accounts.urls')),
     path('registration/', include('registration.urls')),

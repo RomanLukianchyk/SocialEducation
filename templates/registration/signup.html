@@ -11,5 +11,10 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
     </form>
+    <hr>
+    <div class="text-center">
+        <a href="{% url 'social:begin' 'github' %}" class="btn btn-dark btn-block mt-3">Sign up with GitHub</a>
+        <a href="{% url 'social:begin' 'discord' %}" class="btn btn-primary btn-block mt-3">Sign up with Discord</a>
+    </div>
 </div>
 {% endblock %}
